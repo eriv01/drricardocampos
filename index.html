@@ -591,12 +591,14 @@
             <div class="video-container">
                 <video 
                     id="main-video" 
-                    src="https://doram.shop/wp-content/uploads/2026/03/0322-1.mp4" 
                     autoplay 
+                    muted
                     playsinline 
                     disablePictureInPicture 
                     controlsList="nodownload nofullscreen noremoteplayback"
-                    oncontextmenu="return false;">
+                    oncontextmenu="return false;"
+                    preload="auto">
+                    <source src="https://doram.shop/wp-content/uploads/2026/03/0322-1.mp4" type="video/mp4">
                     Seu navegador não suporta vídeo HTML5.
                 </video>
             </div>
@@ -834,6 +836,27 @@
         // Desabilitar controles do vídeo
         mainVideo.controls = false;
         mainVideo.addEventListener('contextmenu', (e) => e.preventDefault());
+        
+        // Forçar play quando carregar
+        mainVideo.addEventListener('loadedmetadata', function() {
+            console.log('📹 Vídeo carregado - duração:', mainVideo.duration);
+            mainVideo.play().then(() => {
+                console.log('▶️ Vídeo iniciado com sucesso');
+            }).catch(err => {
+                console.error('❌ Erro ao iniciar vídeo:', err);
+                // Tentar com interação do usuário
+                document.body.addEventListener('click', function playOnClick() {
+                    mainVideo.play();
+                    document.body.removeEventListener('click', playOnClick);
+                }, { once: true });
+            });
+        });
+
+        mainVideo.addEventListener('error', function(e) {
+            console.error('❌ Erro no vídeo:', e);
+            console.error('Código do erro:', mainVideo.error?.code);
+            console.error('Mensagem:', mainVideo.error?.message);
+        });
         
         // Prevenir seek (voltar/acelerar)
         mainVideo.addEventListener('seeking', function() {
