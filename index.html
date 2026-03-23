@@ -601,8 +601,8 @@
                 </video>
             </div>
             
-            <button id="vsl-button" class="btn-next" disabled>
-                AGUARDE <span id="timer-display">19:00</span> PARA CONTINUAR
+            <button id="vsl-button" class="btn-next" style="display: none;">
+                LIBERAR MEU PROTOCOLO AGORA
             </button>
         </div>
 
@@ -829,7 +829,6 @@
         // ========== TIMER DE 19 MINUTOS ==========
         let timeRemaining = DELAY_SECONDS;
         const vslButton = document.getElementById('vsl-button');
-        const timerDisplay = document.getElementById('timer-display');
         const mainVideo = document.getElementById('main-video');
 
         // Desabilitar controles do vídeo
@@ -845,14 +844,10 @@
 
         const timerInterval = setInterval(() => {
             timeRemaining--;
-            const minutes = Math.floor(timeRemaining / 60);
-            const seconds = timeRemaining % 60;
-            timerDisplay.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
 
             if (timeRemaining <= 0) {
                 clearInterval(timerInterval);
-                vslButton.disabled = false;
-                vslButton.innerHTML = 'LIBERAR MEU PROTOCOLO AGORA';
+                vslButton.style.display = 'block';
                 vslButton.onclick = next;
             }
         }, 1000);
