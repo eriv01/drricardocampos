@@ -499,7 +499,7 @@
             text-align: left;
         }
 
-        /* VÍDEO MP4 SEM CONTROLES */
+        /* VÍDEO MP4 COM CONTROLES */
         .video-container {
             position: relative;
             background: #000;
@@ -514,14 +514,6 @@
             width: 100%;
             height: auto;
             display: block;
-        }
-
-        .video-container video::-webkit-media-controls {
-            display: none !important;
-        }
-
-        .video-container video::-webkit-media-controls-enclosure {
-            display: none !important;
         }
 
         .q-counter {
@@ -591,13 +583,12 @@
             <div class="video-container">
                 <video 
                     id="main-video" 
-                    autoplay 
-                    muted
                     playsinline 
                     disablePictureInPicture 
                     controlsList="nodownload nofullscreen noremoteplayback"
                     oncontextmenu="return false;"
-                    preload="auto">
+                    preload="auto"
+                    controls>
                     <source src="https://doram.shop/wp-content/uploads/2026/03/0322-1.mp4" type="video/mp4">
                     Seu navegador não suporta vídeo HTML5.
                 </video>
@@ -833,23 +824,9 @@
         const vslButton = document.getElementById('vsl-button');
         const mainVideo = document.getElementById('main-video');
 
-        // Desabilitar controles do vídeo
-        mainVideo.controls = false;
-        mainVideo.addEventListener('contextmenu', (e) => e.preventDefault());
-        
-        // Forçar play quando carregar
+        // Logs de debug
         mainVideo.addEventListener('loadedmetadata', function() {
             console.log('📹 Vídeo carregado - duração:', mainVideo.duration);
-            mainVideo.play().then(() => {
-                console.log('▶️ Vídeo iniciado com sucesso');
-            }).catch(err => {
-                console.error('❌ Erro ao iniciar vídeo:', err);
-                // Tentar com interação do usuário
-                document.body.addEventListener('click', function playOnClick() {
-                    mainVideo.play();
-                    document.body.removeEventListener('click', playOnClick);
-                }, { once: true });
-            });
         });
 
         mainVideo.addEventListener('error', function(e) {
@@ -858,11 +835,13 @@
             console.error('Mensagem:', mainVideo.error?.message);
         });
         
-        // Prevenir seek (voltar/acelerar)
-        mainVideo.addEventListener('seeking', function() {
-            if (mainVideo.currentTime < mainVideo.duration) {
-                mainVideo.currentTime = mainVideo.duration;
+        // Prevenir voltar no vídeo (apenas avançar)
+        let lastTime = 0;
+        mainVideo.addEventListener('timeupdate', function() {
+            if (mainVideo.currentTime < lastTime) {
+                mainVideo.currentTime = lastTime;
             }
+            lastTime = mainVideo.currentTime;
         });
 
         const timerInterval = setInterval(() => {
