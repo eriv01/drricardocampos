@@ -79,7 +79,7 @@
         .social-proof-live{font-size:clamp(11px,3vw,13px);color:var(--green);font-weight:700;margin:14px 0}
         .question-text{font-size:clamp(17px,4.8vw,22px);font-weight:900;margin-bottom:18px;line-height:1.35;text-align:left}
 
-        /* VIDEO CONTAINER — deixa o Vturb controlar a altura */
+        /* VIDEO CONTAINER */
         .video-container{
             background:#000;
             border-radius:14px;
@@ -87,6 +87,8 @@
             margin-bottom:16px;
             border:1px solid var(--border);
             width:100%;
+            /* Corta o espaço preto abaixo do vídeo vertical */
+            max-height:56vw;
         }
 
         .secure-footer{font-size:clamp(10px,2.5vw,11px);color:var(--muted);margin-top:14px;line-height:1.5}
@@ -114,11 +116,11 @@
                 s.async=true;
                 document.head.appendChild(s);
             </script>
-            <div id="ifr_69c34e83717734693c9fc4b1_wrapper" style="margin:0 auto;width:100%;">
-                <div style="position:relative;padding-bottom:56.25%;height:0;" id="ifr_69c34e83717734693c9fc4b1_aspect">
+            <div id="ifr_69c34e83717734693c9fc4b1_wrapper" style="margin:0 auto;width:100%;overflow:hidden;">
+                <div style="position:relative;padding-bottom:177.78%;height:0;overflow:hidden;" id="ifr_69c34e83717734693c9fc4b1_aspect">
                     <iframe frameborder="0" allowfullscreen src="about:blank"
                         id="ifr_69c34e83717734693c9fc4b1"
-                        style="position:absolute;top:0;left:0;width:100%;height:100%;"
+                        style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
                         referrerpolicy="origin"
                         onload="this.onload=null,this.src='https://scripts.converteai.net/b2b16172-940f-4928-910c-3e17d128e252/players/69c34e83717734693c9fc4b1/v4/embed.html'+(location.search||'?')+'&vl='+encodeURIComponent(location.href)">
                     </iframe>
